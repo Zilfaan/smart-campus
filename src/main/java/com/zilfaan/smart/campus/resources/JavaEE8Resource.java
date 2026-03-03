@@ -1,4 +1,4 @@
-package com.zilfaan.smartcampus.resources;
+package com.zilfaan.smart.campus.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
