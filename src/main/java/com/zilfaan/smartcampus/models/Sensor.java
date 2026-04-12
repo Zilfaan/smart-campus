@@ -1,5 +1,6 @@
 package com.zilfaan.smartcampus.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ public class Sensor {
     private double currentValue;
     private String roomId;
 
-    public Sensor(String id, String type, String status, String roomId) {
+    public Sensor(@JsonProperty("id") String id, @JsonProperty("type") String type, @JsonProperty("status") String status, @JsonProperty("roomId") String roomId) {
         this.id = id;
         this.type = type;
         this.status = status;

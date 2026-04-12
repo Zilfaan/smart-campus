@@ -1,4 +1,6 @@
 package com.zilfaan.smartcampus.models;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -10,12 +12,12 @@ public class Room {
     private int capacity;
     private List<String> sensorIds = new ArrayList<>();
 
-    public Room(String id, String name, int capacity) {
+    public Room(@JsonProperty("id") String id, @JsonProperty("name") String name, @JsonProperty("capacity") int capacity) {
         this.id = id;
         this.name = name;
         this.capacity = capacity;
     }
-    
+
     // Getters and setters
     public String getId() {
         return id;
@@ -48,6 +50,5 @@ public class Room {
     public void setSensorIds(List<String> sensorIds) {
         this.sensorIds = sensorIds;
     }
-    
-    
+
 }

@@ -1,16 +1,19 @@
 package com.zilfaan.smartcampus.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class SensorReading {
+
     private String id;
     private long timestamp;
     private double value;
 
-    public SensorReading(String id, long timestamp, double value) {
+    public SensorReading(@JsonProperty("id") String id, @JsonProperty("timestamp") long timestamp, @JsonProperty("value") double value) {
         this.id = id;
         this.timestamp = timestamp;
         this.value = value;
     }
-    
+
     // Getters and setters
     public String getId() {
         return id;
@@ -36,5 +39,4 @@ public class SensorReading {
         this.value = value;
     }
 
-    
 }
