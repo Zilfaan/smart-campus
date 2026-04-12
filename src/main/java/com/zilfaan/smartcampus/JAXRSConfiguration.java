@@ -1,4 +1,4 @@
-package com.zilfaan.smart.campus;
+package com.zilfaan.smartcampus;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
