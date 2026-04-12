@@ -4,15 +4,20 @@
  */
 package com.zilfaan.smartcampus.resources;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import com.zilfaan.smartcampus.exceptions.SensorUnavailableException;
 import com.zilfaan.smartcampus.models.DataStore;
 import com.zilfaan.smartcampus.models.Sensor;
 import com.zilfaan.smartcampus.models.SensorReading;
-import java.util.ArrayList;
-import java.util.List;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.core.Response;
 
 /**
  *
@@ -27,11 +32,14 @@ public class SensorReadingResource {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public List<SensorReading> get() {
         return DataStore.readings.getOrDefault(sensorId, new ArrayList<>());
     }
 
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response add(SensorReading r) {
 
         Sensor s = DataStore.sensors.get(sensorId);
@@ -46,7 +54,7 @@ public class SensorReadingResource {
 
         s.setCurrentValue(r.getValue());
 
-        return Response.status(201).build();
+        return Response.status(201).entity(r).build();
     }
 }
  

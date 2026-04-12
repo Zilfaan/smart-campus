@@ -4,11 +4,9 @@
  */
 package com.zilfaan.smartcampus.resources;
 
-import com.zilfaan.smartcampus.exceptions.RoomNotEmptyException;
-import com.zilfaan.smartcampus.models.DataStore;
-import com.zilfaan.smartcampus.models.Room;
 import java.net.URI;
 import java.util.Collection;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -20,6 +18,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import com.zilfaan.smartcampus.exceptions.RoomNotEmptyException;
+import com.zilfaan.smartcampus.models.DataStore;
+import com.zilfaan.smartcampus.models.Room;
 
 /**
  *
@@ -57,12 +59,13 @@ public class SensorRoom {
 
     @DELETE
     @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response deleteRoom(@PathParam("id") String id) {
 
         Room room = DataStore.rooms.get(id);
 
         if (room == null) {
-            return Response.status(404).build();
+            return Response.status(404).entity("Room not found").build();
         }
 
         if (!room.getSensorIds().isEmpty()) {
@@ -71,7 +74,7 @@ public class SensorRoom {
 
         DataStore.rooms.remove(id);
 
-        return Response.ok().build();
+        return Response.ok().entity("Room deleted").build();
     }
 }
 

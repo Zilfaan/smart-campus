@@ -4,11 +4,9 @@
  */
 package com.zilfaan.smartcampus.resources;
 
-import com.zilfaan.smartcampus.exceptions.LinkedResourceNotFoundException;
-import com.zilfaan.smartcampus.models.DataStore;
-import com.zilfaan.smartcampus.models.Sensor;
 import java.net.URI;
 import java.util.Collection;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,6 +18,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import com.zilfaan.smartcampus.exceptions.LinkedResourceNotFoundException;
+import com.zilfaan.smartcampus.models.DataStore;
+import com.zilfaan.smartcampus.models.Sensor;
 
 /**
  *
@@ -63,6 +65,7 @@ public class SensorResource {
     }
 
     @Path("/{id}/readings")
+    @Produces(MediaType.APPLICATION_JSON)
     public SensorReadingResource readings(@PathParam("id") String id) {
         return new SensorReadingResource(id);
     }
