@@ -4,6 +4,7 @@
  */
 package com.zilfaan.smartcampus.resources;
 
+import com.zilfaan.smartcampus.exceptions.SensorUnavailableException;
 import com.zilfaan.smartcampus.models.DataStore;
 import com.zilfaan.smartcampus.models.Sensor;
 import com.zilfaan.smartcampus.models.SensorReading;
@@ -36,9 +37,8 @@ public class SensorReadingResource {
         Sensor s = DataStore.sensors.get(sensorId);
 
         if (s.getStatus().equals("MAINTENANCE")) {
-            throw new RuntimeException("Sensor unavailable exception");
+            throw new SensorUnavailableException();
         }
-        //TODO: Replace with custom exception
 
         DataStore.readings
                 .computeIfAbsent(sensorId, k -> new ArrayList<>())
@@ -49,3 +49,4 @@ public class SensorReadingResource {
         return Response.status(201).build();
     }
 }
+ 

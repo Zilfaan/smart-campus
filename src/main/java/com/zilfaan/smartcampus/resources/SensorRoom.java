@@ -4,6 +4,7 @@
  */
 package com.zilfaan.smartcampus.resources;
 
+import com.zilfaan.smartcampus.exceptions.RoomNotEmptyException;
 import com.zilfaan.smartcampus.models.DataStore;
 import com.zilfaan.smartcampus.models.Room;
 import java.net.URI;
@@ -65,8 +66,7 @@ public class SensorRoom {
         }
 
         if (!room.getSensorIds().isEmpty()) {
-            throw new RuntimeException("Room not empty");
-            //TODO: Replace with custom exception
+            throw new RoomNotEmptyException();
         }
 
         DataStore.rooms.remove(id);

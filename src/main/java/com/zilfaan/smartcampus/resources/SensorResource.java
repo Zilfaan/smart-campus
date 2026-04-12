@@ -4,6 +4,7 @@
  */
 package com.zilfaan.smartcampus.resources;
 
+import com.zilfaan.smartcampus.exceptions.LinkedResourceNotFoundException;
 import com.zilfaan.smartcampus.models.DataStore;
 import com.zilfaan.smartcampus.models.Sensor;
 import java.net.URI;
@@ -32,8 +33,7 @@ public class SensorResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(Sensor sensor, @Context UriInfo uriInfo) {
         if (!DataStore.rooms.containsKey(sensor.getRoomId())) {
-            throw new RuntimeException("Liked resource not found exception");
-            //TODO: Replace with custom exception
+            throw new LinkedResourceNotFoundException();
         }
 
         DataStore.sensors.put(sensor.getId(), sensor);
