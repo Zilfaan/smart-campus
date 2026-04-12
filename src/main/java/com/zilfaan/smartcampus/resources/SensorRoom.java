@@ -25,8 +25,7 @@ import javax.ws.rs.core.UriInfo;
  * @author zilfa
  */
 @Path("/rooms")
-public class RoomResource {
-
+public class SensorRoom {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<Room> getRooms() {
@@ -75,3 +74,4 @@ public class RoomResource {
         return Response.ok().build();
     }
 }
+
