@@ -5,6 +5,7 @@
 package com.zilfaan.smartcampus.filters;
 
 import java.util.logging.Logger;
+
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ContainerResponseContext;
@@ -22,17 +23,13 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
-
-        LOGGER.info("REQUEST: "
-                + requestContext.getMethod() + " "
-                + requestContext.getUriInfo().getRequestUri());
+    LOGGER.log(java.util.logging.Level.INFO, "REQUEST: {0} {1}", new Object[]{requestContext.getMethod(), requestContext.getUriInfo().getRequestUri()});
     }
 
     @Override
     public void filter(ContainerRequestContext requestContext,
             ContainerResponseContext responseContext) {
 
-        LOGGER.info("RESPONSE: "
-                + responseContext.getStatus());
+        LOGGER.log(java.util.logging.Level.INFO, "RESPONSE: {0}", responseContext.getStatus());
     }
 }

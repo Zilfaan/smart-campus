@@ -39,15 +39,16 @@ public class SensorRoom {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createRoom(Room room, @Context UriInfo uriInfo) {
+    // Generate a unique ID for the room
+    String generatedId = java.util.UUID.randomUUID().toString();
+    room.setId(generatedId);
+    DataStore.rooms.put(generatedId, room);
 
-        DataStore.rooms.put(room.getId(), room);
-        //TODO: make the id not come from response and instead generate in here
+    URI uri = uriInfo.getAbsolutePathBuilder()
+        .path(generatedId)
+        .build();
 
-        URI uri = uriInfo.getAbsolutePathBuilder()
-                .path(room.getId())
-                .build();
-
-        return Response.created(uri).entity(room).build();
+    return Response.created(uri).entity(room).build();
     }
 
     @GET

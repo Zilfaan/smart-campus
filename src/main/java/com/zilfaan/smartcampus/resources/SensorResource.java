@@ -38,15 +38,18 @@ public class SensorResource {
             throw new LinkedResourceNotFoundException();
         }
 
-        DataStore.sensors.put(sensor.getId(), sensor);
+        // Generate a unique ID for the sensor
+        String generatedId = java.util.UUID.randomUUID().toString();
+        sensor.setId(generatedId);
+        DataStore.sensors.put(generatedId, sensor);
 
         DataStore.rooms.get(sensor.getRoomId())
-                .getSensorIds()
-                .add(sensor.getId());
+            .getSensorIds()
+            .add(generatedId);
 
         URI uri = uriInfo.getAbsolutePathBuilder()
-                .path(sensor.getId())
-                .build();
+            .path(generatedId)
+            .build();
 
         return Response.created(uri).entity(sensor).build();
     }

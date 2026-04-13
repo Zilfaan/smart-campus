@@ -5,13 +5,16 @@
 package com.zilfaan.smartcampus.exceptions;
 
 import java.util.Map;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 /**
  *
  * @author zilfa
  */
+@Provider
 public class LinkedResourceNotFoundMapper implements ExceptionMapper<LinkedResourceNotFoundException> {
 
     @Override
