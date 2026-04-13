@@ -5,24 +5,32 @@
 package com.zilfaan.smartcampus.exceptions;
 
 import java.util.Map;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 /**
+ * Exception mapper for SensorUnavailableException.
+ * Returns HTTP 403 when a sensor is under maintenance and cannot accept readings
  *
- * @author zilfa
+ * @author Zilfaan Zaki Sulfikhan
  */
 @Provider
 public class SensorUnavailableMapper implements ExceptionMapper<SensorUnavailableException> {
 
-    @Override
-    public Response toResponse(SensorUnavailableException ex) {
+        /**
+         * Converts SensorUnavailableException to a 403 response.
+         * @param ex the thrown exception
+         * @return HTTP 403 with error details in JSON
+         */
+        @Override
+        public Response toResponse(SensorUnavailableException ex) {
         return Response.status(Response.Status.FORBIDDEN)
-                .entity(Map.of(
-                        "error", "Sensor unavailable",
-                        "message", "Sensor is under maintenance"
-                ))
-                .build();
-    }
+            .entity(Map.of(
+                "error", "Sensor unavailable",
+                "message", "Sensor is under maintenance"
+            ))
+            .build();
+        }
 }

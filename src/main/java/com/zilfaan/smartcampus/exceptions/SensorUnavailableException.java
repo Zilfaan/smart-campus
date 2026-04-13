@@ -6,7 +6,7 @@ package com.zilfaan.smartcampus.exceptions;
 
 /**
  *
- * @author zilfa
+ * @author Zilfaan Zaki Sulfikhan
  */
 public class SensorUnavailableException extends RuntimeException{
     

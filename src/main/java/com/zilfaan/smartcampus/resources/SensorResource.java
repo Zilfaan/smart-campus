@@ -24,12 +24,20 @@ import com.zilfaan.smartcampus.models.DataStore;
 import com.zilfaan.smartcampus.models.Sensor;
 
 /**
+ * Resource class for managing Sensor entities in the Smart Campus API.
+ * Supports creation, retrieval, and sub-resource locator for readings.
  *
- * @author zilfa
+ * @author Zilfaan Zaki Sulfikhan
  */
 @Path("/sensors")
 public class SensorResource {
 
+    /**
+     * Registers a new sensor and links it to a room.
+     * @param sensor Sensor object from request body
+     * @param uriInfo URI context for building resource URI
+     * @return 201 with Sensor entity, 422 if room does not exist
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -37,36 +45,35 @@ public class SensorResource {
         if (!DataStore.rooms.containsKey(sensor.getRoomId())) {
             throw new LinkedResourceNotFoundException();
         }
-
-        // Generate a unique ID for the sensor
         String generatedId = java.util.UUID.randomUUID().toString();
         sensor.setId(generatedId);
         DataStore.sensors.put(generatedId, sensor);
-
-        DataStore.rooms.get(sensor.getRoomId())
-            .getSensorIds()
-            .add(generatedId);
-
-        URI uri = uriInfo.getAbsolutePathBuilder()
-            .path(generatedId)
-            .build();
-
+        DataStore.rooms.get(sensor.getRoomId()).getSensorIds().add(generatedId);
+        URI uri = uriInfo.getAbsolutePathBuilder().path(generatedId).build();
         return Response.created(uri).entity(sensor).build();
     }
 
+    /**
+     * Retrieves all sensors, optionally filtered by type.
+     * @param type Optional sensor type filter
+     * @return Collection of Sensor objects
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<Sensor> get(@QueryParam("type") String type) {
-
         if (type == null) {
             return DataStore.sensors.values();
         }
-
         return DataStore.sensors.values().stream()
                 .filter(s -> s.getType().equalsIgnoreCase(type))
                 .toList();
     }
 
+    /**
+     * Sub-resource locator for sensor readings.
+     * @param id Sensor ID
+     * @return SensorReadingResource instance
+     */
     @Path("/{id}/readings")
     @Produces(MediaType.APPLICATION_JSON)
     public SensorReadingResource readings(@PathParam("id") String id) {

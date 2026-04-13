@@ -11,20 +11,26 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 /**
+ * Exception mapper for LinkedResourceNotFoundException.
+ * Returns HTTP 422 when a referenced resource does not exist
  *
- * @author zilfa
+ * @author Zilfaan Zaki Sulfikhan
  */
 @Provider
 public class LinkedResourceNotFoundMapper implements ExceptionMapper<LinkedResourceNotFoundException> {
 
-    @Override
-    public Response toResponse(LinkedResourceNotFoundException ex) {
-
+        /**
+         * Converts LinkedResourceNotFoundException to a 422 response.
+         * @param ex the thrown exception
+         * @return HTTP 422 with error details in JSON
+         */
+        @Override
+        public Response toResponse(LinkedResourceNotFoundException ex) {
         return Response.status(422)
-                .entity(Map.of(
-                        "error", "Invalid reference",
-                        "message", "Room does not exist"
-                ))
-                .build();
-    }
+            .entity(Map.of(
+                "error", "Invalid reference",
+                "message", "Room does not exist"
+            ))
+            .build();
+        }
 }

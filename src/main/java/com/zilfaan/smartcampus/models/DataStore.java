@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * In-memory data store for all rooms, sensors, and readings.
  *
  * @author Zilfaan Zaki Sulfikhan
  */

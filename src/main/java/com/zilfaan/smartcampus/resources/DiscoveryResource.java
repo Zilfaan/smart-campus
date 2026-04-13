@@ -14,11 +14,17 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
+ * Root discovery endpoint for the Smart Campus API.
+ * Provides API metadata, contact info, and resource links
  *
- * @author zilfa
+ * @author Zilfaan Zaki Sulfikhan
  */
 @Path("/")
 public class DiscoveryResource {
+    /**
+     * Returns API metadata and resource links for discovery.
+     * @return JSON object with version, contact, and resource links
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getInfo() {
@@ -33,7 +39,6 @@ public class DiscoveryResource {
         links.put("sensors", "/api/v1/sensors");
 
         data.put("resources", links);
-
         return Response.ok(data).build();
     }
 }

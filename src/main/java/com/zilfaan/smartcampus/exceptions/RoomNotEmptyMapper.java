@@ -5,25 +5,32 @@
 package com.zilfaan.smartcampus.exceptions;
 
 import java.util.Map;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 /**
+ * Exception mapper for RoomNotEmptyException.
+ * Returns 409 response when attempting to delete a room that still contains sensors
  *
- * @author zilfa
+ * @author Zilfaan Zaki Sulfikhan
  */
 @Provider
 public class RoomNotEmptyMapper implements ExceptionMapper<RoomNotEmptyException> {
 
-    @Override
-    public Response toResponse(RoomNotEmptyException ex) {
-
+        /**
+         * Converts RoomNotEmptyException to a 409 response.
+         * @param ex the thrown exception
+         * @return HTTP 409 with error details in JSON
+         */
+        @Override
+        public Response toResponse(RoomNotEmptyException ex) {
         return Response.status(Response.Status.CONFLICT)
-                .entity(Map.of(
-                        "error", "Room is not empty",
-                        "message", "Room contains active sensors"
-                ))
-                .build();
-    }
+            .entity(Map.of(
+                "error", "Room is not empty",
+                "message", "Room contains active sensors"
+            ))
+            .build();
+        }
 }
