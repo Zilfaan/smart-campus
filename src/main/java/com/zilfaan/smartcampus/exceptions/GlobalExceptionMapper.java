@@ -1,5 +1,7 @@
 package com.zilfaan.smartcampus.exceptions;
 
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -11,6 +13,7 @@ import com.zilfaan.smartcampus.models.ErrorMessage;
  * @author Zilfaan Zaki Sulfikhan
  */
 @Provider
+@Produces(MediaType.APPLICATION_JSON)
 public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
 
         /**
@@ -18,10 +21,9 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
          * @param ex the thrown exception
          * @return HTTP 500 with generic error details in JSON
          */
-        @Override
-        public Response toResponse(Throwable ex) {
+    @Override
+    public Response toResponse(Throwable ex) {
         ex.printStackTrace();
-        
         ErrorMessage error = new ErrorMessage(
             Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
             "InternalServerError",
@@ -29,6 +31,7 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
         );
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
             .entity(error)
+            .type(MediaType.APPLICATION_JSON)
             .build();
-        }
+    }
 }
