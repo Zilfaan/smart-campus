@@ -62,6 +62,9 @@ public class SensorReadingResource {
             LOGGER.warning("[POST /sensors/" + sensorId + "/readings] Sensor unavailable");
             throw new SensorUnavailableException();
         }
+        // Assign a UUID
+        r.setId(java.util.UUID.randomUUID().toString());
+        
         LOGGER.info("[POST /sensors/" + sensorId + "/readings] add function called");
         DataStore.readings.computeIfAbsent(sensorId, k -> new ArrayList<>()).add(r);
         s.setCurrentValue(r.getValue());
