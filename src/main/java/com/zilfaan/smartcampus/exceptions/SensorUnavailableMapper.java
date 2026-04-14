@@ -4,11 +4,11 @@
  */
 package com.zilfaan.smartcampus.exceptions;
 
-import java.util.Map;
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+
+import com.zilfaan.smartcampus.models.ErrorMessage;
 
 /**
  * Exception mapper for SensorUnavailableException.
@@ -26,11 +26,13 @@ public class SensorUnavailableMapper implements ExceptionMapper<SensorUnavailabl
          */
         @Override
         public Response toResponse(SensorUnavailableException ex) {
+        ErrorMessage error = new ErrorMessage(
+            Response.Status.FORBIDDEN.getStatusCode(),
+            "SensorUnavailable",
+            "Sensor is under maintenance"
+        );
         return Response.status(Response.Status.FORBIDDEN)
-            .entity(Map.of(
-                "error", "Sensor unavailable",
-                "message", "Sensor is under maintenance"
-            ))
+            .entity(error)
             .build();
         }
 }

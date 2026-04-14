@@ -4,11 +4,11 @@
  */
 package com.zilfaan.smartcampus.exceptions;
 
-import java.util.Map;
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+
+import com.zilfaan.smartcampus.models.ErrorMessage;
 
 /**
  * Exception mapper for LinkedResourceNotFoundException.
@@ -26,11 +26,13 @@ public class LinkedResourceNotFoundMapper implements ExceptionMapper<LinkedResou
          */
         @Override
         public Response toResponse(LinkedResourceNotFoundException ex) {
+        ErrorMessage error = new ErrorMessage(
+            422,
+            "LinkedResourceNotFound",
+            "Room does not exist"
+        );
         return Response.status(422)
-            .entity(Map.of(
-                "error", "Invalid reference",
-                "message", "Room does not exist"
-            ))
+            .entity(error)
             .build();
         }
 }

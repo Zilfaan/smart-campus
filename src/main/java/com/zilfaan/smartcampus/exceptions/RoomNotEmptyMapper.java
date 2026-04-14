@@ -4,11 +4,11 @@
  */
 package com.zilfaan.smartcampus.exceptions;
 
-import java.util.Map;
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+
+import com.zilfaan.smartcampus.models.ErrorMessage;
 
 /**
  * Exception mapper for RoomNotEmptyException.
@@ -26,11 +26,13 @@ public class RoomNotEmptyMapper implements ExceptionMapper<RoomNotEmptyException
          */
         @Override
         public Response toResponse(RoomNotEmptyException ex) {
+        ErrorMessage error = new ErrorMessage(
+            Response.Status.CONFLICT.getStatusCode(),
+            "RoomNotEmpty",
+            "Room contains active sensors"
+        );
         return Response.status(Response.Status.CONFLICT)
-            .entity(Map.of(
-                "error", "Room is not empty",
-                "message", "Room contains active sensors"
-            ))
+            .entity(error)
             .build();
         }
 }
