@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.zilfaan.smartcampus.resources;
 
 import java.net.URI;
@@ -31,6 +27,7 @@ import com.zilfaan.smartcampus.models.Room;
  */
 @Path("/rooms")
 public class SensorRoom {
+        private static final java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger(SensorRoom.class.getName());
     /**
      * Retrieves all rooms in the system.
      * @return Collection of Room objects
@@ -38,6 +35,7 @@ public class SensorRoom {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<Room> getRooms() {
+            LOGGER.info("[GET /rooms] Fetching all rooms");
         return DataStore.rooms.values();
     }
 
@@ -51,6 +49,7 @@ public class SensorRoom {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createRoom(Room room, @Context UriInfo uriInfo) {
+            LOGGER.info("[POST /rooms] Creating room: " + room);
         String generatedId = java.util.UUID.randomUUID().toString();
         room.setId(generatedId);
         DataStore.rooms.put(generatedId, room);
@@ -67,6 +66,7 @@ public class SensorRoom {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Room getRoom(@PathParam("id") String id) {
+            LOGGER.info("[GET /rooms/" + id + "] Fetching room by ID");
         return DataStore.rooms.get(id);
     }
 
@@ -79,14 +79,19 @@ public class SensorRoom {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteRoom(@PathParam("id") String id) {
+        LOGGER.info("[DELETE /rooms/" + id + "] About to delete room");
         Room room = DataStore.rooms.get(id);
+        LOGGER.info("[DELETE /rooms/" + id + "] deleteRoom function called");
         if (room == null) {
+            LOGGER.warning("[DELETE /rooms/" + id + "] Room not found");
             return Response.status(404).entity("Room not found").build();
         }
         if (!room.getSensorIds().isEmpty()) {
+            LOGGER.warning("[DELETE /rooms/" + id + "] Room not empty");
             throw new RoomNotEmptyException();
         }
         DataStore.rooms.remove(id);
+        LOGGER.info("[DELETE /rooms/" + id + "] Deleted room");
         return Response.ok().entity("Room deleted").build();
     }
 }

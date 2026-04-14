@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.zilfaan.smartcampus.resources;
 
 import java.util.ArrayList;
@@ -26,6 +22,7 @@ import com.zilfaan.smartcampus.models.SensorReading;
  * @author Zilfaan Zaki Sulfikhan
  */
 public class SensorReadingResource {
+    private static final java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger(SensorReadingResource.class.getName());
 
     private String sensorId;
 
@@ -44,6 +41,9 @@ public class SensorReadingResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<SensorReading> get() {
+        LOGGER.info("[GET /sensors/" + sensorId + "/readings] About to fetch readings");
+        LOGGER.info("[GET /sensors/" + sensorId + "/readings] get function called");
+        LOGGER.info("[GET /sensors/" + sensorId + "/readings] Returning readings");
         return DataStore.readings.getOrDefault(sensorId, new ArrayList<>());
     }
 
@@ -56,12 +56,16 @@ public class SensorReadingResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response add(SensorReading r) {
+        LOGGER.info("[POST /sensors/" + sensorId + "/readings] About to add reading: " + r);
         Sensor s = DataStore.sensors.get(sensorId);
         if (s.getStatus().equals("MAINTENANCE")) {
+            LOGGER.warning("[POST /sensors/" + sensorId + "/readings] Sensor unavailable");
             throw new SensorUnavailableException();
         }
+        LOGGER.info("[POST /sensors/" + sensorId + "/readings] add function called");
         DataStore.readings.computeIfAbsent(sensorId, k -> new ArrayList<>()).add(r);
         s.setCurrentValue(r.getValue());
+        LOGGER.info("[POST /sensors/" + sensorId + "/readings] Added reading");
         return Response.status(201).entity(r).build();
     }
 }

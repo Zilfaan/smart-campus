@@ -24,7 +24,9 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
      */
     @Override
     public void filter(ContainerRequestContext requestContext) {
-        LOGGER.log(java.util.logging.Level.INFO, "REQUEST: {0} {1}", new Object[]{requestContext.getMethod(), requestContext.getUriInfo().getRequestUri()});
+        LOGGER.log(java.util.logging.Level.INFO, "-- INCOMING REQUEST --");
+        LOGGER.log(java.util.logging.Level.INFO, "Method: {0}", requestContext.getMethod());
+        LOGGER.log(java.util.logging.Level.INFO, "URI: {0}", requestContext.getUriInfo().getAbsolutePath());
     }
 
     /**
@@ -35,6 +37,7 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
     @Override
     public void filter(ContainerRequestContext requestContext,
             ContainerResponseContext responseContext) {
-        LOGGER.log(java.util.logging.Level.INFO, "RESPONSE: {0}", responseContext.getStatus());
+        LOGGER.log(java.util.logging.Level.INFO, "-- OUTGOING RESPONSE --");
+        LOGGER.log(java.util.logging.Level.INFO, "Status: {0}", responseContext.getStatus());
     }
 }
