@@ -1,7 +1,7 @@
 
 # Smart Campus Sensor & Room Management API
-![Java](https://img.shields.io/badge/Java-17%2B-blue?logo=java)
-![JAX-RS](https://img.shields.io/badge/JAX--RS-3.1-green?logo=jakartaee)
+![Java](https://img.shields.io/badge/Java-8%2B-blue?logo=java)
+![JAX-RS](https://img.shields.io/badge/JAX--RS-2.x-green?logo=jakartaee)
 ![Maven](https://img.shields.io/badge/Maven-Build--Tool-C71A36?logo=apachemaven)
 
 ---
@@ -26,8 +26,8 @@ This project was built as a part of the requirement for the Coursework submissio
 ---
 
 ## Tech Stack
-- Java 17+
-- JAX-RS (Jersey)
+- Java 8+
+- JAX-RS 2.x (Jersey 2.32)
 - Maven
 - Servlet Container (Tomcat, Payara, GlassFish, etc.)
 ---
