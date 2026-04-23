@@ -6,6 +6,14 @@
 
 ---
 
+| Name | Zilfaan Zaki Sulfikhan |
+|------|------------------------|
+| UoW | w2120000 |
+| IIT | 20232038 |
+| Group | CS-01 |
+| Level | L5 |
+
+
 ## Overview
 This project was built as a part of the requirement for the Coursework submission for the Client-Server Architectures Module (5COSC022W), offered by the University of Westminster. It contains A RESTful API for managing rooms, sensors, and sensor readings for a university "Smart Campus".
 
